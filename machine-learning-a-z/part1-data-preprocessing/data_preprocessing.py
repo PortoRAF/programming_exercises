@@ -49,3 +49,14 @@ y = labelencoder_y.fit_transform(y)
 from sklearn.model_selection import train_test_split
 #from sklearn.cross_validation import train_test_split - DEPRECATED!!
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+
+#Feature scaling
+#Different features (age, salary) must be put in the same scale, otherwise a 
+#much larger feature (as in salary values are 1,000x larger than age values)
+#will dominate the machine learning calculations
+from sklearn.preprocessing import StandardScaler
+sc_X = StandardScaler()
+X_train = sc_X.fit_transform(X_train)
+#Just transform since it's already fitted to X_train. It's necessary to keep
+#the same scaling for both datasets
+X_test = sc_X.transform(X_test)
