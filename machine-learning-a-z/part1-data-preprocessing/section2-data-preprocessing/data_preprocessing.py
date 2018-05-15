@@ -13,7 +13,7 @@ X = dataset.iloc[:, :-1].values
 
 #Creating dependant variable vector
 #Take all lines and only the last column
-Y = dataset.iloc[:, 3].values
+y = dataset.iloc[:, 3].values
 
 #Taking care of missing data
 from sklearn.preprocessing import Imputer
@@ -43,4 +43,9 @@ onehotencoder = OneHotEncoder(categorical_features=[0])
 X = onehotencoder.fit_transform(X).toarray()
 #Encode the dependant variable
 labelencoder_y = LabelEncoder()
-Y = labelencoder_y.fit_transform(Y)
+y = labelencoder_y.fit_transform(y)
+
+#Splitting the dataset into Training Set and Test Set
+from sklearn.model_selection import train_test_split
+#from sklearn.cross_validation import train_test_split - DEPRECATED!!
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
