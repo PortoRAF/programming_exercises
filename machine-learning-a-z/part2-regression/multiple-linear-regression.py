@@ -70,3 +70,23 @@ import statsmodels.formula.api as sm
 #statsmodels library needs a column of 1s to be added at the beginning of the
 #features matrix to represent x0 from the multiple linear regression formula
 X = np.append(arr=np.ones((50,1)).astype(int),values=X,axis=1)
+#create an optimal X matrix that will hold the most significant features
+X_opt = X[:, [0,1,2,3,4,5]] #create a matrix with all original columns
+regressor_OLS = sm.OLS(endog=y, exog=X_opt).fit()
+regressor_OLS.summary()
+#remove feature with the highest P value
+X_opt = X[:, [0,1,3,4,5]]
+regressor_OLS = sm.OLS(endog=y, exog=X_opt).fit()
+regressor_OLS.summary()
+#remove feature with the highest P value
+X_opt = X[:, [0,3,4,5]]
+regressor_OLS = sm.OLS(endog=y, exog=X_opt).fit()
+regressor_OLS.summary()
+#remove feature with the highest P value
+X_opt = X[:, [0,3,5]]
+regressor_OLS = sm.OLS(endog=y, exog=X_opt).fit()
+regressor_OLS.summary()
+#remove feature with the highest P value
+X_opt = X[:, [0,3]]
+regressor_OLS = sm.OLS(endog=y, exog=X_opt).fit()
+regressor_OLS.summary()
