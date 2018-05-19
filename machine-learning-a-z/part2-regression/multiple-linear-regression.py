@@ -71,22 +71,26 @@ import statsmodels.formula.api as sm
 #features matrix to represent x0 from the multiple linear regression formula
 X = np.append(arr=np.ones((50,1)).astype(int),values=X,axis=1)
 #create an optimal X matrix that will hold the most significant features
-X_opt = X[:, [0,1,2,3,4,5]] #create a matrix with all original columns
-regressor_OLS = sm.OLS(endog=y, exog=X_opt).fit()
-regressor_OLS.summary()
-#remove feature with the highest P value
-X_opt = X[:, [0,1,3,4,5]]
-regressor_OLS = sm.OLS(endog=y, exog=X_opt).fit()
-regressor_OLS.summary()
-#remove feature with the highest P value
-X_opt = X[:, [0,3,4,5]]
-regressor_OLS = sm.OLS(endog=y, exog=X_opt).fit()
-regressor_OLS.summary()
-#remove feature with the highest P value
-X_opt = X[:, [0,3,5]]
-regressor_OLS = sm.OLS(endog=y, exog=X_opt).fit()
-regressor_OLS.summary()
-#remove feature with the highest P value
-X_opt = X[:, [0,3]]
-regressor_OLS = sm.OLS(endog=y, exog=X_opt).fit()
-regressor_OLS.summary()
+X_opt = X[:, [0,1,2,3,4,5]] #matrix with all original columns
+SL = 0.05
+
+#create function to remove columns with p > SL
+def backwardElimination(X, SL):
+    numVars = len(X[0]) #take number of columns
+    #apply method until the pvalues of all features are lower than SL
+    for i in range(0, numVars):
+        regressor_OLS = sm.OLS(endog=y, exog=X).fit()
+        maxpVar = max(regressor_OLS.pvalues) #take the largest p value found
+        if maxpVar > SL:
+            #find the largest p value in features matrix and remove its column
+            for j in range(0, numVars - i):
+                if regressor_OLS.pvalues[j] == maxpVar:
+                    X = np.delete(X, j, 1)
+        else: #if all p values are lower than SL, exit loop and return matrix
+            break
+        
+    regressor_OLS.summary()
+    return X
+
+#function call
+X_modeled = backwardElimination(X_opt, SL)
