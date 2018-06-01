@@ -33,7 +33,7 @@ int validate_S_C (int S, int C)
 	return 1;
 }
 
-int main (void)
+int table (void)
 {
 //	char T_in[MAX_TEST_CASES+1];
 //	getInput(T_in, MAX_TEST_CASES+1);
@@ -64,7 +64,8 @@ int main (void)
 		S[i] = strtol(params, &end, 10);
 		C[i] = strtol(end, NULL, 10);
 		if (!validate_S_C(S[i], C[i])) {
-			break;
+//			break;
+			return 0;
 		}
 
 //		getInput(X_params, 300);		
@@ -101,11 +102,6 @@ int main (void)
 */		
 		int row = sizeof(diffTable) / sizeof(diffTable[0]);
 		int col = sizeof(diffTable[0]) / sizeof(diffTable[0][0]);		
-
-		if (diffTable[row-1][0] != 0 && S[i] != 1) {
-			return 0;
-		}		
-
 		int k;
 		int L = 0;
 		for (j = row; j > 0; j--)  {
