@@ -4,9 +4,12 @@
 
 #define MAX_TEST_CASES 3
 #define MAX_INPUT_LEN 5
+#define MAX_X_LEN 512
 
-int getInput (char *str, int inputLen)
+char *getInput (int str_len)
 {
+	char *str = malloc(sizeof(str) * str_len);
+//	str = strInput;
 	int c = EOF;
 	unsigned int i = 0;
 
@@ -16,7 +19,7 @@ int getInput (char *str, int inputLen)
 
 	str[i] = '\0';
 
-	return 0;
+	return str;
 }
 
 int validate_S_C (int S, int C)
@@ -32,8 +35,10 @@ int validate_S_C (int S, int C)
 
 int main ()
 {
-	char T_in[MAX_TEST_CASES+1];
-	getInput(T_in, MAX_TEST_CASES+1);
+//	char T_in[MAX_TEST_CASES+1];
+//	getInput(T_in, MAX_TEST_CASES+1);
+	char *T_in = malloc(sizeof(T_in) * MAX_TEST_CASES);
+	T_in = getInput(MAX_TEST_CASES+1);	
 
 	int T = strtol(T_in, NULL, 10);
 
@@ -41,8 +46,11 @@ int main ()
 		return 0;
 	}
 
-	char params[MAX_INPUT_LEN+1];
-	char X_params[99999999];
+//	char params[MAX_INPUT_LEN+1];
+//	char X_params[99999999];
+	char *params = malloc(sizeof(params) * MAX_INPUT_LEN);
+	char *X_params = malloc(sizeof(X_params) * MAX_X_LEN);
+
 	int i, j;
 	int S[T];
 	int C[T];
@@ -51,14 +59,16 @@ int main ()
 
 	for (i = 0; i < T; i++) {
 		char *end;
-		getInput(params, MAX_INPUT_LEN+1);
+//		getInput(params, MAX_INPUT_LEN+1);
+		params = getInput(MAX_INPUT_LEN+1);
 		S[i] = strtol(params, &end, 10);
 		C[i] = strtol(end, NULL, 10);
 		if (!validate_S_C(S[i], C[i])) {
 			break;
 		}
 
-		getInput(X_params, 300);		
+//		getInput(X_params, 300);		
+		X_params = getInput(300);
 		char *begin = X_params;
 		end = NULL;
 		for (j = 0; j < S[i]; j++) {
