@@ -33,9 +33,9 @@ int main (int argc, char *argv[])
 			}
 		
 			printf("File has %d lines.\n", count);
+		
+			fclose(file);
 		}
-
-		fclose(file);
 	}
 
 	return 0;
