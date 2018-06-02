@@ -45,17 +45,14 @@ int main (void)
 	}
 
 	int num_of_steps = (temp_C_high - temp_C_low) / temp_C_step; //Already includes initial value
-
 	int temp_C_steps[num_of_steps+2];
+
+	printf("\nCelsius\t\tFahrenheit\n-------\t\t----------\n");
+
 	int i;
 	for (i = 0; i < (num_of_steps+1); i++) {
 		temp_C_steps[i] = temp_C_low + temp_C_step * i;
-	}
-
-	printf("\nCelsius\n-------\n");
-
-	for (i = 0; i < (num_of_steps+1); i++) {
-		printf("%.6d\n", temp_C_steps[i]);
+		printf("%3d.000\t\t%06.3f\n", temp_C_steps[i], (((float)temp_C_steps[i] * (9.0/5.0)) + 32));
 	}
 	
 	return 0;
