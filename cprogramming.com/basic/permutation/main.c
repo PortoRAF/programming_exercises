@@ -3,27 +3,6 @@
 #include <string.h>
 
 /**********************
- *
- * Function declared for learning purposes
- * It will not be used in this program
- *
-
-static FILE *open_file (FILE *filename, char *mode)
-{
-	FILE *fp = fopen(filename, mode);
-
-	if (fp == NULL)
-	{
-		printf("Unable to open file");
-		exit(EXIT_FAILURE);
-	}
-	
-	return fp;
-}
-
-*/
-
-/**********************
  * PERMUTATION
  *-------------
  * Program takes one string as input and display all possible
@@ -38,20 +17,20 @@ void swap (char *x, char *y)
 	*y = tmp;
 }
 
-void permute (char *arr, int start, int end)
+void permute (char *arr, int place, int end)
 {
-	if (start == (end-1))
+	if (place == (end-1))
 	{
 		printf("%s\n", arr);
 	}
 	else
 	{
-		int i;
-		for (i = start; i < end; i++)
+		int next_char;
+		for (next_char = place; next_char < end; next_char++)
 		{
-			swap( (arr+start) , (arr+i) );
-			permute(arr, start+1, end);
-			swap( (arr+start), (arr+i) );
+			swap( (arr+place) , (arr+next_char) );
+			permute(arr, place+1, end);
+			swap( (arr+place), (arr+next_char) );
 		}
 	}
 }
