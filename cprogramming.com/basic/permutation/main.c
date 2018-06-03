@@ -31,6 +31,31 @@ static FILE *open_file (FILE *filename, char *mode)
  *
  */
 
+void swap (char *x, char *y)
+{
+	char tmp = *x;
+	*x = *y;
+	*y = tmp;
+}
+
+void permute (char *arr, int start, int end)
+{
+	if (start == (end-1))
+	{
+		printf("%s\n", arr);
+	}
+	else
+	{
+		int i;
+		for (i = start; i < end; i++)
+		{
+			swap( (arr+start) , (arr+i) );
+			permute(arr, start+1, end);
+			swap( (arr+start), (arr+i) );
+		}
+	}
+}
+
 int main (int argc, char *argv[])
 {
 	if (argc != 2)
@@ -40,17 +65,7 @@ int main (int argc, char *argv[])
 	}
 	else
 	{		
-		int in_len = strlen(argv[1]);
-		char input[in_len+1];
-
-		int i;
-
-		for (i = 0; i < in_len; i++)
-		{
-			input[i] = argv[1][i];
-		}
-
-		printf("%s\n", input);
+		permute(argv[1], 0, strlen(argv[1]));
 	}
 
 	return 0;
