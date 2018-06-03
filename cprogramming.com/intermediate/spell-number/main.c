@@ -1,137 +1,105 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <string.h>
 
-void spell_num (int num, int r)
+const char *num_to_text[] = { "", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", \
+							"ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", \
+							"eighteen", "nineteen" };
+
+const char *tens_to_text[] = { "", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" };
+
+const char *powers_to_text[] = { "", "thousand", "million", "billion" };
+
+void add_space(char *str)
 {
-	int i;
-	for (i = 100; i > 0; i /= 10)
-	{
-		if (num / i != 0)
-		{
-		if (i == 10)
-		{
-			switch (num / i)
-			{
-				case(1): 
-				{
-					switch (num)
-					{
-						case(10): printf("ten "); break;
-						case(11): printf("eleven "); break;
-						case(12): printf("twelve "); break;
-						case(13): printf("thirteen "); break;
-						case(14): printf("fourteen "); break;
-						case(15): printf("fifteen "); break;
-						case(16): printf("sixteen "); break;
-						case(17): printf("seventeen "); break;
-						case(18): printf("eighteen "); break;
-						case(19): printf("nineteen "); break;
-						default: break;
-					}
-					num = 0;
-					break;
-				}
-				case(2): printf("twenty "); break;
-				case(3): printf("thirty "); break;
-				case(4): printf("forty "); break;
-				case(5): printf("fifty "); break;
-				case(6): printf("sixty "); break;
-				case(7): printf("seventy "); break;
-				case(8): printf("eighty "); break;
-				case(9): printf("ninety "); break;
-				default: break;
-			}
-		}
-		else
-		{
-			switch (num / i)
-			{
-				case(1): printf("one "); break;
-				case(2): printf("two "); break;
-				case(3): printf("three "); break;
-				case(4): printf("four "); break;
-				case(5): printf("five "); break;
-				case(6): printf("six "); break;
-				case(7): printf("seven "); break;
-				case(8): printf("eight "); break;
-				case(9): printf("nine "); break;
-				default: break;
-			}
-			if (i == 100)
-			{
-				printf("hundred ");
-			}
-		}
-		num = num % i;
-		}
-	}
-
-	switch (r)
-	{
-		case(0): printf("billion "); break;
-		case(1): printf("million "); break;
-		case(2): printf("thousand "); break;
-		default: break;
-	}
+	str = strcat(str, " ");
 }
 
-int main (int argc, char *argv[])
+void append_hundred (int n, char *str)
 {
-/*
-	if (argc != 2)
+	strcat(str, num_to_text[n]);
+	add_space(str);
+	strcat(str, "hundred");
+	add_space(str);
+}
+
+char *spell_num (int num, int pwr)
+{
+	char *new_str = malloc(256);
+
+	if (num/100)
 	{
-		("usage: %s number\n", argv[0]);
-		exit(EXIT_FAILURE);
+		append_hundred(num/100, new_str);
+		num = num % 100;
 	}
-*/
+
+	if (num >= 20)
+	{
+		strcat(new_str, tens_to_text[num/10]);
+		add_space(new_str);
+		strcat(new_str, num_to_text[num%10]);
+		add_space(new_str);
+	}
+	else
+	{
+		strcat(new_str, num_to_text[num]);
+		add_space(new_str);
+	}
+	
+	strcat(new_str, powers_to_text[pwr]);
+	add_space(new_str);
+
+	return new_str;
+}
+
+char *prepend_neg (char *str)
+{
+	char *new_str = malloc(256);
+	strcat(new_str, "minus");
+	add_space(new_str);
+	strcat(new_str, str);
+	
+	return new_str;
+}
+
+int main (void)
+{
 	int num;
 	printf("Please insert a number between %d and %d: ", INT_MIN, INT_MAX);
 	scanf("%d", &num);
 
-	if (num >> 31) // MSB = 1 : negative number
+	int is_neg = 0;
+	if (num < 0) 
 	{
-		/* Two's complement */
-//		num ^= -1; //Invert all bits
-//		num += 1;  //Add 1
+		is_neg = 1;
 		num *= -1;
-		printf("minus ");
 	}
 
-	int i;
+	char *str = malloc(256);	
 	int m;
-	int r = 0;
-	for (i = 1000000000; i > 0; i /= 1000)
+	int pwr = 0;
+	while (num > 0)
 	{
-		m = num / i;
+		m = num % 1000;
 
 		if (m != 0)
 		{
-			/* print numbers */
-//			printf("%d\n", m);
-			spell_num(m, r);
-			num = num % i; // Remove upper values
+			str = strcat(spell_num(m, pwr), str);
 		}
 
-		r++;
-//		printf("%d\n", m);
+		num /= 1000;
+		pwr++;
 	}
 
-	printf("\n");
-	
-/*
-	int num_len = strlen(argv[1]);
-	char num[num_len+1][]; thousand
-
-	int i;
-	int j = 0;
-	for (i = (strlen(argv[1])-1); i >= 0; i--)
+	if (is_neg)
 	{
-		if (j % 2 != 0)
-		{
-			
-		}
+		str = prepend_neg(str);
 	}
-*/
+
+	printf("%s\n", str);
+
+	free(str);	
+
 	return 0;
 }
