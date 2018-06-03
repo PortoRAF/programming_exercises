@@ -20,19 +20,19 @@ int main (void)
 	int temp_C_step;
 
 	/*Take initial temperature in Celsius*/
-	printf("Please type in a lower limit (0 <= limit < 500): ");
+	printf("Coloque a temperatura mais baixa (-273 <= limite < 500): ");
 	scanf("%d", &temp_C_low);
 
-	if (!check_limit("Lower", temp_C_low, 0, 499)) return 0;
+	if (!check_limit("Lower", temp_C_low, -273, 499)) return 0;
 	
 	/*Take final temperature in Celsius*/
-	printf("Please type in a higher limit (10 < limit <= 500): ");
+	printf("Coloque a temperatura mais alta (10 < limite <= 500): ");
 	scanf("%d", &temp_C_high);
 
 	if (!check_limit("Higher", temp_C_high, 11, 500)) return 0;
 	
 	/*Take step size*/
-	printf("Please type in a step (0 < step <= 50): ");
+	printf("Coloque a diferença (0 < diferença <= 50): ");
 	scanf("%d", &temp_C_step);
 
 	if (!check_limit("Step", temp_C_step, 1, 50)) return 0;

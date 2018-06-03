@@ -55,7 +55,7 @@ int main (void)
 		exit(EXIT_FAILURE);
 	}
 
-	int factorial[5120];
+	int factorial[100001];
 	
 	int f_len = 1;
 	f_len = factorate(factorial, n);
@@ -76,7 +76,7 @@ int main (void)
 	}
 
 	printf("\n\n");
-	printf("Number of trailing zeros: %d\n", count);
+	printf("Quantidade de números: %d\n", f_len);
 
 	return 0;
 }
