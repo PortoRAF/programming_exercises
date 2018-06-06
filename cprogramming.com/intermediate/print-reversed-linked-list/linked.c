@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include "linked.h"
 
@@ -29,7 +30,23 @@ void list_destroy (struct list *list)
 
 void list_print (struct list *list)
 {
+	struct node *current = list->head;
 
+	printf("{ ");
+
+	while (current != NULL)
+	{
+		if (current != list->tail)
+		{
+			printf("%d, ", current->data);
+		}
+		else
+		{
+			printf("%d }", current->data);
+		}
+
+		current = current->next;
+	}
 }
 
 void list_print_reverse (struct list *list)
