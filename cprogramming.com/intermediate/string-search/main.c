@@ -13,10 +13,38 @@ int calc_str_len (char *str)
 	return str_len;
 }
 
+int set_index (int *char_compares, char token_pos[3], int *index_pos)
+{
+	int j  = *index_pos;
+
+	if (*char_compares)
+	{
+		j++;
+	}
+	else if (token_pos[1])
+	{
+		; //do nothing
+	}
+	else if (token_pos[2])
+	{
+		j++;
+	}
+	else
+	{
+		j = token_pos[0];
+	}
+
+	return j;
+}
+
 int compare_strings (char *str_orig, char *subset, int str_orig_len, int subset_len)
 {
 //	int is_subset = 0;
-	int start_comparing = 0;
+	char token = '*';
+//	int token_at_start = 0;
+//	int token_at_mid = 0;
+	char token_pos[3] = {0, 0, 0};
+	int char_compares = 0;
 	int i;
 	int j = 0;
 
@@ -26,23 +54,40 @@ int compare_strings (char *str_orig, char *subset, int str_orig_len, int subset_
 		{
 			if (subset[j] == str_orig[i])
 			{
-				start_comparing = 1;
+				char_compares = 1;
+			}
+			else if (subset[j] == token)
+			{
+//				id_token(&j, token_pos);
+				if (j == 0)
+				{
+					token_pos[0] = 1;
+				}
+				else if (subset[j-1] != '\\')
+				{
+					if (j == (subset_len - 1))
+					{
+						j++;
+						break;
+					}
+					else
+					{
+						token_pos[1] = 1;
+						j++;
+					}
+				}
 			}
 
-			if (start_comparing)
-			{
-				j++;
-			}
-			else
-			{
-				j = 0;
-			}
+			j = set_index(&char_compares, token_pos, &j);
 		
-			start_comparing = 0;
+			if (char_compares)
+			{
+				char_compares = 0;
+				token_pos[1] = 0;
+			}
 		}
 		else
 		{
-//			is_subset = 1;
 			break;
 		}
 	}
