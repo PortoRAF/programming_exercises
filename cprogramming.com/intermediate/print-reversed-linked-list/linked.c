@@ -49,24 +49,23 @@ void list_print (struct list *list)
 	}
 }
 
+void print_next (struct node *node)
+{
+	if (node->next == NULL)
+	{
+		printf ("{ %d, ", node->data);
+	}
+	else
+	{
+		print_next(node->next);
+		printf("%d, ", node->data);
+	}
+}
+
 void list_print_reverse (struct list *list)
 {
-	struct node *node = list->head;
-
-	int data[list->size];
-	int i = 0;
-	while (node != NULL)
-	{
-		data[i++] = node->data;
-		node = node->next;
-	}
-
-	printf ("{ ");
-	while (i-- > 1)
-	{
-		printf("%d, ", data[i]);
-	}
-	printf("%d }\n", data[i]);
+	print_next(list->head);
+	printf("}\n");
 }
 
 void node_insert (struct list *list, int data)
