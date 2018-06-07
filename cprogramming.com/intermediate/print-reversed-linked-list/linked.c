@@ -30,28 +30,43 @@ void list_destroy (struct list *list)
 
 void list_print (struct list *list)
 {
-	struct node *current = list->head;
+	struct node *node = list->head;
 
 	printf("{ ");
 
-	while (current != NULL)
+	while (node != NULL)
 	{
-		if (current != list->tail)
+		if (node != list->tail)
 		{
-			printf("%d, ", current->data);
+			printf("%d, ", node->data);
 		}
 		else
 		{
-			printf("%d }", current->data);
+			printf("%d }\n", node->data);
 		}
 
-		current = current->next;
+		node = node->next;
 	}
 }
 
 void list_print_reverse (struct list *list)
 {
+	struct node *node = list->head;
 
+	int data[list->size];
+	int i = 0;
+	while (node != NULL)
+	{
+		data[i++] = node->data;
+		node = node->next;
+	}
+
+	printf ("{ ");
+	while (i-- > 1)
+	{
+		printf("%d, ", data[i]);
+	}
+	printf("%d }\n", data[i]);
 }
 
 void node_insert (struct list *list, int data)
