@@ -33,6 +33,24 @@ int main (int argc, char *argv[])
 		num[i] = strtol(argv[i+1], NULL, 10);
 	}
 	
+	/* Solution taken from cprogramming.com.
+		It solves in O(n) but doesn't work
+		for negative arrays */
+	int sum = 0;
+	int max = 0;
+	for (i = 0; i < (argc-1); i++)
+	{
+		sum = sum + num[i];
+		if (sum < 0)
+		{
+			sum = 0;
+		}
+		max = sum > max ? sum : max;
+	}
+
+	printf("The maximum subarray sum is %d\n", max);
+	
+/*	
 	int j;
 	int sum;
 	int max = 0x80000001;
@@ -59,6 +77,6 @@ int main (int argc, char *argv[])
 		printf("%d, ", num[i]);
 	}
 	printf ("}\n");
-
+*/
 	return 0;
 }
