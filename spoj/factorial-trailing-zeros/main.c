@@ -19,6 +19,20 @@
 
 int main (void)
 {
+	int n;
+
+	printf("Insert number: ");
+	scanf("%d", &n);
+
+	int result = 0;
+
+	while (n > 0)
+	{
+		n /= 5;
+		result += n;
+	}
+	
+	printf("Z(n) = %d\n", result);
 
 	return 0;
 }
