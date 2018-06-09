@@ -73,21 +73,9 @@ int main (void)
 			}
 
 			if (input[i-1] == '\n') ret++;
-/*			
-			if (i == 1)
-			{
-				test_case = strtol(input, &input, 10);
-				if (test_case > MAX_TESTS) break;
-			}
-*/
 		}
 		
 		input[i] = '\0'; // Make array into string
-
-//		printf("%s\n", input);
-
-//		char *str;
-//		test_case = strtol(input, &input, 10);i
 
 		for (i = 0; i < test_case; i++)
 		{
@@ -100,14 +88,6 @@ int main (void)
 	}
 
 	int result = 0;
-/*
-	while (n > 0)
-	{
-		n /= 5;
-		result += n;
-	}
 	
-	printf("Z(n) = %d\n", result);
-*/
 	return 0;
 }
